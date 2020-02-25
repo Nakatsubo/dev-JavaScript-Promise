@@ -44,7 +44,10 @@ function purchaseFunc(pay) {
 purchaseFunc(500)
   .then((change) => {
     console.log(`${change}yen`);
-  });
+  })
+  .catch((error) => {
+    console.log(error);
+  })
 
 // => Success!
 // => 400yen
