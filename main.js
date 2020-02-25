@@ -14,6 +14,12 @@ function purchaseFunc(pay) {
 purchaseFunc(500)
   .then((change) => {
     console.log(`${change}yen`);
+    return purchaseFunc(change);
+  })
+  // then() を直列処理する
+  .then((change) => {
+    console.log(`${change}yen`);
+    // return purchaseFunc(change);
   })
   .catch((error) => {
     console.log(error);
