@@ -7,7 +7,7 @@ Referenced by<br>
 # MEMO
 
 - 同期処理<br>
-上から順番に処理を実行する
+上から順番に処理を実行する。
 
 - 非同期処理<br>
 一つの処理が終了するのを待たずに次の処理を実行する。
@@ -26,8 +26,8 @@ console.log(3);
 // 2
 ```
 
-
 ## Promiseの状態
+Promiseは非同期処理の状態を表すオブジェクト。
 
 |状態|内容|
 |-----|-----|
@@ -42,10 +42,12 @@ return new Promise((resolve, reject) => {
 });
 ```
 
-## then()メソッド
+## Promiseの結果
+
+### then()メソッド
 Promiseのインスタンスの状態が、fulfilledの時に実行される関数を登録できるインスタンスメソッド。
 
-## catch()メソッド
+### catch()メソッド
 Promiseのインスタンスの状態が、rejectedの時に実行される関数を登録できるインスタンスメソッド。
 
 ```
@@ -72,4 +74,23 @@ purchaseFunc(500)
 
 // => Success!
 // => 400yen
+```
+
+## PromiseをsetTimeoutで処理
+
+```
+// const waitFunc = function(sec) {
+//   return new Promise(function(resolve) {
+//     setTimeout(resolve, sec);
+//   });
+// };
+
+// 上記を省略
+const waitFunc = (sec) => {
+  return new Promise((resolve) => setTimeout(resolve, sec));
+};
+
+waitFunc(1000).then(() => {
+  console.log('Hello, JavaScript');
+});
 ```
