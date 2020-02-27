@@ -21,9 +21,9 @@ setTimeout(() => {
 console.log(3);
 
 // => 実行結果
-// 1
-// 3
-// 2
+// => 1
+// => 3
+// => 2
 ```
 
 ## Promise
@@ -31,7 +31,7 @@ Promiseは非同期処理の状態を表すオブジェクト。
 
 |状態|内容|
 |-----|-----|
-|apending|初期状態、実行中|
+|pending|初期状態、実行中|
 |fulfilled|処理が成功した状態|
 |rejected|処理が失敗した状態|
 
@@ -96,7 +96,7 @@ waitFunc(1000).then(() => {
 ```
 
 ## async
-asyncは非同期関数を定義する宣言。
+asyncは非同期関数を定義する宣言。Promiseインスタンスを返す。
 
 ```
 // 下記は同義
@@ -122,18 +122,19 @@ async function rejectFunc() {
   return Promise.reject(new Error('Error!'));
 };
 rejectFunc().catch(error => console.log(error));
+
 // => Error: Error!
 ```
 
 ### async関数内で、throw
-
-- throw文は現在の関数の実行を中止し、定義した例外を処理する。
+throw文は現在の関数の実行を中止し、定義した例外を処理する。
 
 ```
 async function throwFunc() {
   throw new Error('Error!');
 }
 throwFunc().catch(error => console.log(error));
+
 // => Error: Error!
 ```
 
@@ -163,4 +164,36 @@ console.log(3);
 // => 3
 // 3000ミリ秒後に処理
 // => 2
+```
+
+### 複数のawaitを実行
+
+```
+const promiseFunc = (number) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(number * 2);
+    }, 1000);
+  });
+};
+
+async function asyncFunc() {
+  const a = await promiseFunc(1);
+  // awaitを指定しないと、Promise {<pending>} と出力される
+  console.log(a);
+  const b = await promiseFunc(2);
+  console.log(b);
+  const c = await promiseFunc(3);
+  console.log(c);
+  return a + b + c;
+};
+
+asyncFunc().then((value) => {
+  console.log(value);
+});
+
+// => 2
+// => 4
+// => 6
+// => 12
 ```
