@@ -34,10 +34,16 @@
 //   });
 // };
 
-const waitFunc = (sec) => {
-  return new Promise((resolve) => setTimeout(resolve, sec));
-};
+// const waitFunc = (sec) => {
+//   return new Promise((resolve) => setTimeout(resolve, sec));
+// };
 
-waitFunc(1000).then(() => {
-  console.log('Hello, JavaScript');
-});
+// waitFunc(1000).then(() => {
+//   console.log('Hello, JavaScript');
+// });
+
+async function asyncFunc() {
+  return 'resolve';
+};
+asyncFunc().then(value => console.log(value));
+// => resolve
