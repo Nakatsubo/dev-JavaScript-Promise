@@ -60,25 +60,53 @@
 // throwFunc().catch(error => console.log(error));
 // // => Error: Error!
 
-const waitFunc = (sec) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, sec);
-  });
-}
+// const waitFunc = (sec) => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve();
+//     }, sec);
+//   });
+// }
 
-async function awaitFunc() {
-  console.log(1);
-  // waitFunc(3000); // awaitを指定しなければPromiseの結果を待機しない。
-  await waitFunc(3000);
-  console.log(2);
+// async function awaitFunc() {
+//   console.log(1);
+//   // waitFunc(3000); // awaitを指定しなければPromiseの結果を待機しない。
+//   await waitFunc(3000);
+//   console.log(2);
+// };
+
+// awaitFunc();
+// console.log(3);
+
+// // => 1
+// // => 3
+// // 3000ミリ秒後に処理
+// // => 2
+
+const promiseFunc = (number) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(number * 2);
+    }, 1000);
+  });
 };
 
-awaitFunc();
-console.log(3);
+async function asyncFunc() {
+  const a = await promiseFunc(1);
+  // awaitを指定しないと、Promise {<pending>} と出力される
+  console.log(a);
+  const b = await promiseFunc(2);
+  console.log(b);
+  const c = await promiseFunc(3);
+  console.log(c);
+  return a + b + c;
+};
 
-// => 1
-// => 3
-// 3000ミリ秒後に処理
+asyncFunc().then((value) => {
+  console.log(value);
+});
+
 // => 2
+// => 4
+// => 6
+// => 12
