@@ -108,6 +108,7 @@ async function asyncFunc() {
 
 function asyncFunc() {
   return new Promise((resolve, reject) => {
+    // ...
     resolve(value);
   });
 }
