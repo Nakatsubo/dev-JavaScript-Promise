@@ -137,3 +137,44 @@
 // };
 // asyncFailure().catch(error => console.log(error.message));
 // // => Error!
+
+// function promiseResolve(number) {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       console.log(1);
+//       resolve(number * 2)
+//     }, 1000);
+//   })
+// };
+
+// function promiseFunc() {
+//   return promiseResolve(5).then(result => {
+//     console.log(2);
+//     return result += 5;
+//   });
+// };
+
+// promiseFunc().then(result => {
+//   console.log(3);
+//   console.log(result);
+// });
+
+function asyncResolve(number) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      console.log(1);
+      resolve(number * 2);
+    }, 1000)
+  });
+};
+
+async function asyncFunc() {
+  const result = await asyncResolve(5);
+  console.log(2);
+  return result + 5;
+}
+
+asyncFunc().then(result => {
+  console.log(3);
+  console.log(result);
+})
