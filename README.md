@@ -115,7 +115,7 @@ function asyncFunc() {
 ```
 
 ### async関数内で、Promiseをreturn
-Promiseがそのまま返る。。。みたい。
+Promiseがそのまま返る...みたい。
 
 ```
 async function rejectFunc() {
@@ -123,4 +123,44 @@ async function rejectFunc() {
 };
 rejectFunc().catch(error => console.log(error));
 // => Error: Error!
+```
+
+### async関数内で、throw
+
+- throw文は現在の関数の実行を中止し、定義した例外を処理する。
+
+```
+async function throwFunc() {
+  throw new Error('Error!');
+}
+throwFunc().catch(error => console.log(error));
+// => Error: Error!
+```
+
+## await
+awaitは指定したPromiseの結果が返されるまで処理を待機する。
+
+```
+const waitFunc = (sec) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, sec);
+  });
+}
+
+async function awaitFunc() {
+  console.log(1);
+  // waitFunc(3000); // awaitを指定しなければPromiseの結果を待機しない。
+  await waitFunc(3000);
+  console.log(2);
+};
+
+awaitFunc();
+console.log(3);
+
+// => 1
+// => 3
+// 3000ミリ秒後に処理
+// => 2
 ```

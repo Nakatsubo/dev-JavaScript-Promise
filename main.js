@@ -48,8 +48,37 @@
 // asyncFunc().then(value => console.log(value));
 // // => resolve
 
-async function rejectFunc() {
-  return Promise.reject(new Error('Error!'));
+// async function rejectFunc() {
+//   return Promise.reject(new Error('Error!'));
+// };
+// rejectFunc().catch(error => console.log(error));
+// // => Error: Error!
+
+// async function throwFunc() {
+//   throw new Error('Error!');
+// }
+// throwFunc().catch(error => console.log(error));
+// // => Error: Error!
+
+const waitFunc = (sec) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, sec);
+  });
+}
+
+async function awaitFunc() {
+  console.log(1);
+  // waitFunc(3000); // awaitを指定しなければPromiseの結果を待機しない。
+  await waitFunc(3000);
+  console.log(2);
 };
-rejectFunc().catch(error => console.log(error));
-// => Error: Error!
+
+awaitFunc();
+console.log(3);
+
+// => 1
+// => 3
+// 3000ミリ秒後に処理
+// => 2
