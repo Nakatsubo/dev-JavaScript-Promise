@@ -3,6 +3,8 @@ This Repository is Studies Promise by JavaScript<br>
 Referenced by<br>
 - <a href="https://rightcode.co.jp/blog/information-technology/javascript-promise" target="_blank" rel="noopener">https://rightcode.co.jp/blog/information-technology/javascript-promise</a>
 - <a href="https://rightcode.co.jp/blog/information-technology/javascript-async-await" target="_blank" rel="noopener">https://rightcode.co.jp/blog/information-technology/javascript-async-await</a>
+- <a href="https://qiita.com/soarflat/items/1a9613e023200bbebcb3" target="_blank" rel="noopener">https://qiita.com/soarflat/items/1a9613e023200bbebcb3</a>
+
 
 # MEMO
 
@@ -36,6 +38,7 @@ Promiseは非同期処理の状態を表すオブジェクト。
 |rejected|処理が失敗した状態|
 
 ```
+// Promiseを返す
 return new Promise((resolve, reject) => {
   resolve(); // => fulfilledの状態になる
   rejected(); // => rejectedの状態になる
@@ -133,13 +136,17 @@ throw文は現在の関数の実行を中止し、定義した例外を処理す
 async function throwFunc() {
   throw new Error('Error!');
 }
-throwFunc().catch(error => console.log(error));
+throwFunc().catch(error => console.log(error.message));
 
-// => Error: Error!
+// => Error!
 ```
 
+- Errorコンストラクタ<br>
+Errorオブジェクトを生成する。<br>
+<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Error" target="_blank" rel="noopener">MDN we docs</a>
+
 ## await
-awaitは指定したPromiseの結果が返されるまで処理を待機する。
+awaitは指定したPromiseの結果(resolve, reject)が返されるまで、async内の処理を待機する。
 
 ```
 const waitFunc = (sec) => {
@@ -166,7 +173,7 @@ console.log(3);
 // => 2
 ```
 
-### 複数のawaitを実行
+### 複数のawaitを直列処理
 
 ```
 const promiseFunc = (number) => {
@@ -197,3 +204,55 @@ asyncFunc().then((value) => {
 // => 6
 // => 12
 ```
+
+### awaitの例外処理
+
+```
+async function asyncFailure() {
+  const value = await Promise.reject(new Error('Error!'));
+};
+asyncFailure().catch(error => console.log(error.message));
+// => Error!
+```
+
+## Promise.all()
+引数に非同期関数の配列を受け取り、Promiseインスタンスを返す。<br>
+並列処理が可能となる。
+
+```
+const promiseFunc = (number) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(number * 2);
+    }, 1000);
+  });
+};
+
+async function asyncFunc() {
+  const numbers = await Promise.all([
+    promiseFunc(1),
+    promiseFunc(2),
+    promiseFunc(3)
+  ]);
+  console.log(numbers);
+};
+
+asyncFunc();
+
+// => (3) [2, 4, 6]
+```
+
+## Promiseとasync/awaitの記述例
+
+- Promise
+
+```
+
+```
+
+- async/await
+
+```
+
+```
+
