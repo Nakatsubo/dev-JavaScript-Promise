@@ -26,7 +26,7 @@ console.log(3);
 // 2
 ```
 
-## Promiseの状態
+## Promise
 Promiseは非同期処理の状態を表すオブジェクト。
 
 |状態|内容|
@@ -93,4 +93,22 @@ const waitFunc = (sec) => {
 waitFunc(1000).then(() => {
   console.log('Hello, JavaScript');
 });
+```
+
+## async
+asyncは非同期関数を定義する宣言。
+
+```
+// 下記は同義
+
+async function asyncFunc() {
+  // ...
+  return value;
+}
+
+function asyncFunc() {
+  return new Promise((resolve, reject) => {
+    resolve(value);
+  });
+}
 ```
