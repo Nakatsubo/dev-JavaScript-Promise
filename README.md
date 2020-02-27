@@ -243,6 +243,7 @@ asyncFunc();
 ```
 
 ## Promiseとasync/awaitの記述例
+async/awaitで記述する方がわかりやすい。
 
 - Promise
 
