@@ -113,3 +113,14 @@ function asyncFunc() {
   });
 }
 ```
+
+### async関数内で、Promiseをreturn
+Promiseがそのまま返る。。。みたい。
+
+```
+async function rejectFunc() {
+  return Promise.reject(new Error('Error!'));
+};
+rejectFunc().catch(error => console.log(error));
+// => Error: Error!
+```

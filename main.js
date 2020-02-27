@@ -42,8 +42,14 @@
 //   console.log('Hello, JavaScript');
 // });
 
-async function asyncFunc() {
-  return 'resolve';
+// async function asyncFunc() {
+//   return 'resolve';
+// };
+// asyncFunc().then(value => console.log(value));
+// // => resolve
+
+async function rejectFunc() {
+  return Promise.reject(new Error('Error!'));
 };
-asyncFunc().then(value => console.log(value));
-// => resolve
+rejectFunc().catch(error => console.log(error));
+// => Error: Error!
