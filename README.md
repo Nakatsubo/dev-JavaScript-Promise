@@ -10,7 +10,21 @@ Referenced by<br>
 上から順番に処理を実行する
 
 - 非同期処理<br>
-一つの処理が終了するのを待たずに次の処理を実行する
+一つの処理が終了するのを待たずに次の処理を実行する。
+
+```
+// setTimeoutの場合
+console.log(1);
+setTimeout(() => {
+  console.log(2);
+}, 1000);
+console.log(3);
+
+// => 実行結果
+// 1
+// 3
+// 2
+```
 
 
 ## Promiseの状態
