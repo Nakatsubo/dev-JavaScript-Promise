@@ -298,7 +298,11 @@ asyncFunc().then(result => {
 // => 15
 ```
 
+<<<<<<< HEAD
+## 直列のPromiseとasync/awaitの記述例
+=======
 ## 連続したPromiseとasync/awaitの記述例
+>>>>>>> 368b5e935b12084958182781c364920261009e72
 やっぱり...async/awaitで記述する方がわかりやすい。
 
 - Promise
@@ -387,4 +391,78 @@ asyncFunc().then(result => {
 // => 3
 // => 4
 // => Finish!
+```
+
+## 並列のPromiseとasync/awaitの記述例
+やっぱり...async/awaitで記述する方がわかりやすい。
+
+- Promise
+
+```
+function promiseResolveA(number) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(number);
+    }, 1000);
+  });
+};
+
+function promiseResolveB(number) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(number * 2);
+    }, 1000);
+  });
+};
+
+function promiseFunc() {
+  const promiseA = promiseResolveA(5);
+  const promiseB = promiseResolveA(10);
+  const promiseC = promiseB.then(number => {
+    return promiseResolveB(number);
+  });
+
+  return Promise.all([promiseA, promiseB, promiseC])
+    .then(([a, b, c]) => {
+      return [a, b, c];
+    });
+};
+
+promiseFunc().then(([a, b, c]) => {
+  console.log(a, b, c)
+});
+
+// => 5, 10, 20
+```
+
+- async/await
+
+```
+function asyncResolveA(number) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(number);
+    }, 1000);
+  });
+};
+
+function asyncResolveB(number) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(number * 2);
+    }, 1000);
+  });
+};
+
+async function asyncFunc() {
+  const [a, b] = await Promise.all([asyncResolveA(5), asyncResolveA(10)]);
+  const c = await asyncResolveB(b);
+  return [a, b, c];
+};
+
+asyncFunc().then(([a, b, c]) => {
+  console.log(a, b, c);
+});
+
+// => 5, 10, 20
 ```
