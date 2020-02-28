@@ -210,7 +210,87 @@
 
 // // => 70
 
-function asyncResolve(number) {
+// function asyncResolve(number) {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve(number);
+//     }, 1000);
+//   });
+// };
+
+// async function asyncfunc() {
+//   return await asyncResolve(5) * await asyncResolve(10) + await asyncResolve(20);
+// };
+
+// asyncfunc().then(result => {
+//   console.log(result);
+// });
+
+// // => 70
+
+// function asyncResolve(number) {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve(number);
+//     }, 1000);
+//   });
+// };
+
+// async function asyncFunc() {
+//   for (let i = 0; i < 5; i++) {
+//     const result = await asyncResolve(i);
+//     console.log(result);
+//   };
+//   return 'Finish!';
+// };
+
+// asyncFunc().then(result => {
+//   console.log(result);
+// });
+
+// // => 0
+// // => 1
+// // => 2
+// // => 3
+// // => 4
+// // => Finish!
+
+// function promiseResolveA(number) {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve(number);
+//     }, 1000);
+//   });
+// };
+
+// function promiseResolveB(number) {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve(number * 2);
+//     }, 1000);
+//   });
+// };
+
+// function promiseFunc() {
+//   const promiseA = promiseResolveA(5);
+//   const promiseB = promiseResolveA(10);
+//   const promiseC = promiseB.then(number => {
+//     return promiseResolveB(number);
+//   });
+
+//   return Promise.all([promiseA, promiseB, promiseC])
+//     .then(([a, b, c]) => {
+//       return [a, b, c];
+//     });
+// };
+
+// promiseFunc().then(([a, b, c]) => {
+//   console.log(a, b, c)
+// });
+
+// // => 5, 10, 20
+
+function asyncResolveA(number) {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(number);
@@ -218,12 +298,22 @@ function asyncResolve(number) {
   });
 };
 
-async function asyncfunc() {
-  return await asyncResolve(5) * await asyncResolve(10) + await asyncResolve(20);
+function asyncResolveB(number) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(number * 2);
+    }, 1000);
+  });
 };
 
-asyncfunc().then(result => {
-  console.log(result);
+async function asyncFunc() {
+  const [a, b] = await Promise.all([asyncResolveA(5), asyncResolveA(10)]);
+  const c = await asyncResolveB(b);
+  return [a, b, c];
+};
+
+asyncFunc().then(([a, b, c]) => {
+  console.log(a, b, c);
 });
 
-// => 70
+// => 5, 10, 20
