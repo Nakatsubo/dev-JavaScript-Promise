@@ -159,22 +159,71 @@
 //   console.log(result);
 // });
 
+// function asyncResolve(number) {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       console.log(1);
+//       resolve(number * 2);
+//     }, 1000)
+//   });
+// };
+
+// async function asyncFunc() {
+//   const result = await asyncResolve(5);
+//   console.log(2);
+//   return result + 5;
+// }
+
+// asyncFunc().then(result => {
+//   console.log(3);
+//   console.log(result);
+// })
+
+// function promiseResolve(number) {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve(number);
+//     }, 1000);
+//   });
+// };
+
+// function promiseFunc() {
+//   let result = 0;
+//   return promiseResolve(5)
+//     .then(number => {
+//       result += number;
+//         return promiseResolve(10);
+//     })
+//     .then(number => {
+//       result *= number;
+//       return promiseResolve(20)
+//     })
+//     .then(number => {
+//       result += number;
+//       return result;
+//     });
+// };
+
+// promiseFunc().then(result => {
+//   console.log(result);
+// });
+
+// // => 70
+
 function asyncResolve(number) {
   return new Promise(resolve => {
     setTimeout(() => {
-      console.log(1);
-      resolve(number * 2);
-    }, 1000)
+      resolve(number);
+    }, 1000);
   });
 };
 
-async function asyncFunc() {
-  const result = await asyncResolve(5);
-  console.log(2);
-  return result + 5;
-}
+async function asyncfunc() {
+  return await asyncResolve(5) * await asyncResolve(10) + await asyncResolve(20);
+};
 
-asyncFunc().then(result => {
-  console.log(3);
+asyncfunc().then(result => {
   console.log(result);
-})
+});
+
+// => 70

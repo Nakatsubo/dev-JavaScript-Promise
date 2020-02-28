@@ -143,7 +143,7 @@ throwFunc().catch(error => console.log(error.message));
 
 - Errorコンストラクタ<br>
 Errorオブジェクトを生成する。<br>
-<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Error" target="_blank" rel="noopener">MDN we docs</a>
+<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Error" target="_blank" rel="noopener">MDN web docs</a>
 
 ## await
 awaitは指定したPromiseの結果(resolve, reject)が返されるまで、async内の処理を待機する。
@@ -287,12 +287,72 @@ function asyncResolve(number) {
 async function asyncFunc() {
   const result = await asyncResolve(5);
   console.log(2);
-  return result + 5;
+  return result += 5;
 }
 
 asyncFunc().then(result => {
   console.log(3);
   console.log(result);
 })
+
+// => 15
 ```
 
+## 連続したPromiseとasync/awaitの記述例
+
+- Promise
+
+```
+function promiseResolve(number) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(number);
+    }, 1000);
+  });
+};
+
+function promiseFunc() {
+  let result = 0;
+  return promiseResolve(5)
+    .then(number => {
+      result += number;
+        return promiseResolve(10);
+    })
+    .then(number => {
+      result *= number;
+      return promiseResolve(20)
+    })
+    .then(number => {
+      result += number;
+      return result;
+    });
+};
+
+promiseFunc().then(result => {
+  console.log(result);
+});
+
+// => 70
+```
+
+- async/await
+
+```
+function asyncResolve(number) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(number);
+    }, 1000);
+  });
+};
+
+async function asyncfunc() {
+  return await asyncResolve(5) * await asyncResolve(10) + await asyncResolve(20);
+};
+
+asyncfunc().then(result => {
+  console.log(result);
+});
+
+// => 70
+```
