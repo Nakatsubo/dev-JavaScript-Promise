@@ -462,3 +462,62 @@ asyncFunc().then(([a, b, c]) => {
 
 // => 5, 10, 20
 ```
+
+## 例外処理のPromiseとasync/awaitの記述例
+
+- Promise
+
+```
+function throwError() {
+  return new Promise((resolve, reject) => {
+    try {
+      throw new Error('Error!');
+      resolve('Success!');
+    } catch(error) {
+      reject(error);
+    }
+  }, 1000);
+};
+
+function errorHandler() {
+  return throwError()
+    .then(result => {
+      return result;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+errorHandler().catch(error => {
+  console.log(error.message); // => Error!
+});
+```
+
+- async/await
+
+```
+function throwError() {
+  return new Promise((resolve, reject) => {
+    try {
+      throw new Error('Error!');
+      resolve('Success!');
+    } catch(error) {
+      reject(error);
+    }
+  }, 1000);
+};
+
+async function errorHandler() {
+  try {
+    const result = await throwError();
+    return result;
+  } catch(error) {
+    throw error;
+  }
+};
+
+errorHandler().catch(error => {
+  console.log(error.message); // => Error!
+});
+```
