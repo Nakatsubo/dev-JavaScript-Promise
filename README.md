@@ -299,6 +299,7 @@ asyncFunc().then(result => {
 ```
 
 ## 連続したPromiseとasync/awaitの記述例
+やっぱり...async/awaitで記述する方がわかりやすい。
 
 - Promise
 
@@ -355,4 +356,35 @@ asyncfunc().then(result => {
 });
 
 // => 70
+```
+
+- for文を使った非同期処理
+
+```
+function asyncResolve(number) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(number);
+    }, 1000);
+  });
+};
+
+async function asyncFunc() {
+  for (let i = 0; i < 5; i++) {
+    const result = await asyncResolve(i);
+    console.log(result);
+  };
+  return 'Finish!';
+};
+
+asyncFunc().then(result => {
+  console.log(result);
+});
+
+// => 0
+// => 1
+// => 2
+// => 3
+// => 4
+// => Finish!
 ```

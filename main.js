@@ -210,6 +210,24 @@
 
 // // => 70
 
+// function asyncResolve(number) {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve(number);
+//     }, 1000);
+//   });
+// };
+
+// async function asyncfunc() {
+//   return await asyncResolve(5) * await asyncResolve(10) + await asyncResolve(20);
+// };
+
+// asyncfunc().then(result => {
+//   console.log(result);
+// });
+
+// // => 70
+
 function asyncResolve(number) {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -218,12 +236,22 @@ function asyncResolve(number) {
   });
 };
 
-async function asyncfunc() {
-  return await asyncResolve(5) * await asyncResolve(10) + await asyncResolve(20);
+async function asyncFunc() {
+  for (let i = 0; i < 5; i++) {
+    const result = await asyncResolve(i);
+    console.log(result);
+  };
+  return 'Finish!';
 };
 
-asyncfunc().then(result => {
+asyncFunc().then(result => {
   console.log(result);
 });
 
-// => 70
+// => 0
+// => 1
+// => 2
+// => 3
+// => 4
+// => Finish!
+
