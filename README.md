@@ -7,6 +7,7 @@ Referenced by<br>
 
 
 # MEMO
+非同期処理に関するメモ。主にPromise, async/await。
 
 - 同期処理<br>
 上から順番に処理を実行する。
