@@ -290,30 +290,79 @@
 
 // // => 5, 10, 20
 
-function asyncResolveA(number) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(number);
-    }, 1000);
-  });
+// function asyncResolveA(number) {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve(number);
+//     }, 1000);
+//   });
+// };
+
+// function asyncResolveB(number) {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve(number * 2);
+//     }, 1000);
+//   });
+// };
+
+// async function asyncFunc() {
+//   const [a, b] = await Promise.all([asyncResolveA(5), asyncResolveA(10)]);
+//   const c = await asyncResolveB(b);
+//   return [a, b, c];
+// };
+
+// asyncFunc().then(([a, b, c]) => {
+//   console.log(a, b, c);
+// });
+
+// // => 5, 10, 20
+
+// function throwError() {
+//   return new Promise((resolve, reject) => {
+//     try {
+//       throw new Error('Error!');
+//       resolve('Success!');
+//     } catch(error) {
+//       reject(error);
+//     }
+//   }, 1000);
+// };
+
+// function errorHandler() {
+//   return throwError()
+//     .then(result => {
+//       return result;
+//     })
+//     .catch(error => {
+//       throw error;
+//     });
+// };
+
+// errorHandler().catch(error => {
+//   console.log(error.message); // => Error!
+// });
+
+function throwError() {
+  return new Promise((resolve, reject) => {
+    try {
+      throw new Error('Error!');
+      resolve('Success!');
+    } catch(error) {
+      reject(error);
+    }
+  }, 1000);
 };
 
-function asyncResolveB(number) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(number * 2);
-    }, 1000);
-  });
+async function errorHandler() {
+  try {
+    const result = await throwError();
+    return result;
+  } catch(error) {
+    throw error;
+  }
 };
 
-async function asyncFunc() {
-  const [a, b] = await Promise.all([asyncResolveA(5), asyncResolveA(10)]);
-  const c = await asyncResolveB(b);
-  return [a, b, c];
-};
-
-asyncFunc().then(([a, b, c]) => {
-  console.log(a, b, c);
+errorHandler().catch(error => {
+  console.log(error.message); // => Error!
 });
-
-// => 5, 10, 20
