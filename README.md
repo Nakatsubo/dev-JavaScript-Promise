@@ -298,11 +298,7 @@ asyncFunc().then(result => {
 // => 15
 ```
 
-<<<<<<< HEAD
 ## 直列のPromiseとasync/awaitの記述例
-=======
-## 連続したPromiseとasync/awaitの記述例
->>>>>>> 368b5e935b12084958182781c364920261009e72
 やっぱり...async/awaitで記述する方がわかりやすい。
 
 - Promise
